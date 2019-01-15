@@ -62,13 +62,36 @@
       background: black;
       position: absolute;
       top: 50%;
+      transform-origin: right;
     }
 
   </style>
 
   <script>
+    (function() {
+      const secondNeedle = document.querySelector('.second-hand');
+      const minuteNeedle = document.querySelector('.min-hand');
+      const hourNeedle = document.querySelector('.hour-hand');
 
+      const getCurrentTime = () => {
+        const time = new Date();
 
+        const sec = time.getSeconds();
+        const secAngle = ((sec / 60) * 360) + 90;
+        secondNeedle.style.transform = `rotate(${secAngle}deg)`;
+
+        const min = time.getMinutes();
+        const minAngle = ((min / 60) * 360) + ((sec / 60) * 6) + 90;
+        minuteNeedle.style.transform = `rotate(${minAngle}deg)`;
+
+        const hour = time.getHours();
+        const hourAngle = ((hour / 12) * 360) + 90;
+        hourNeedle.style.transform = `rotate(${hourAngle}deg)`;
+      }
+
+      getCurrentTime();
+      setInterval(() => getCurrentTime(), 1000);
+    }())
   </script>
 </body>
 </html>
