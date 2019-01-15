@@ -96,6 +96,42 @@
   </div>
 
 <script>
+  (function() {
+    let activeId;
+    let savedId;
+    let shiftOn = false;
+    const items = Array.from(document.querySelectorAll('.item input[type="checkbox"]'));
+    items.forEach(item => {
+      item.addEventListener('click', handleClick);
+    });
+    document.addEventListener('keydown', shiftDown);
+    document.addEventListener('keyup', shiftUp);
+
+    function handleClick() {
+      if (!savedId) savedId = activeId;
+      activeId = items.indexOf(this);
+      if (shiftOn) {
+        const front = Math.min(savedId, activeId);
+        const back = Math.max(savedId, activeId);
+        for (let i = front; i < back + 1; i++) {
+          items[i].checked = true;
+        }
+      }
+    }
+
+    function shiftDown(e) {
+      if (e.key === 'Shift') {
+        savedId = activeId;
+        shiftOn = true;
+        console.log(shiftOn);
+      }
+    }
+
+    function shiftUp(e) {
+      if (e.key === 'Shift') shiftOn = false;
+      console.log(shiftOn);
+    }
+  }())
 </script>
 </body>
 </html>
