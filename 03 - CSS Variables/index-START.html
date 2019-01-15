@@ -22,6 +22,22 @@
 
   <style>
 
+    :root {
+      --spacing: 10px;
+      --blur: 10px;
+      --color: orange;
+    }
+
+    .hl {
+      color: var(--color);
+    }
+
+    img {
+      background-color: var(--color);
+      padding: var(--spacing);
+      filter: blur(var(--blur));
+    }
+
     /*
       misc styles, nothing to do with CSS variables
     */
@@ -45,6 +61,21 @@
   </style>
 
   <script>
+    (function() {
+      const pair = {
+        spacing: '--spacing',
+        blur: '--blur',
+        base: '--color',
+      }
+
+      const handleUpdate = e => {
+        const target = e.target;
+        document.documentElement.style.setProperty(pair[target.name], target.value + (target.dataset.sizing || ''));
+      }
+
+      const inputs = document.querySelectorAll('.controls input');
+      inputs.forEach(input => document.addEventListener('input', e => handleUpdate(e)) );
+    }());
   </script>
 
 </body>
