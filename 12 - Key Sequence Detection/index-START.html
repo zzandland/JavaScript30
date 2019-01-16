@@ -7,6 +7,22 @@
 </head>
 <body>
 <script>
+  (function() {
+    const sequences = [];
+
+    function handleKeypress(e) {
+      if (sequences.length < 6) { 
+        sequences.push(e.key);
+      } else {
+        sequences.shift();
+        sequences.push(e.key);
+      }
+      console.log(e.key);
+      console.log(sequences);
+    }
+
+    document.addEventListener('keydown', handleKeypress);
+  }())
 </script>
 </body>
 </html>

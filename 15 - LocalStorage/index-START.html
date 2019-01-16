@@ -26,10 +26,48 @@
   </div>
 
 <script>
-  const addItems = document.querySelector('.add-items');
-  const itemsList = document.querySelector('.plates');
-  const items = [];
+  (function() {
+    const addItems = document.querySelector('.add-items');
+    const itemsList = document.querySelector('.plates');
+    const items = JSON.parse(localStorage.getItem('items')) || [];
 
+    function handleSubmit(e) {
+      e.preventDefault();
+      const itemName = this.querySelector('input[name="item"]').value;
+      const item = {
+        name: itemName,
+        tacoed: false,
+      };
+      items.push(item);
+      updatePlates();
+      localStorage.setItem('items', JSON.stringify(items));
+      this.reset();
+    }
+
+    function toggleTacoed(e) {
+      if (e.target.matches('input')) {
+        const index = e.target.dataset.index;
+        items[index].tacoed = !items[index].tacoed;
+        localStorage.setItem('items', JSON.stringify(items));
+        updatePlates();
+      }
+    }
+
+    function updatePlates() {
+      itemsList.innerHTML = items.map((item, i) => {
+        return `
+          <li>
+            <input type="checkbox" data-index=${i} id="item${i}" ${item.tacoed ? 'checked' : ''}/>
+            <label for="item${i}">${item.name}</label>
+          </li>
+        `;
+      }).join('');
+    }
+
+    updatePlates();
+    addItems.addEventListener('submit', handleSubmit);
+    itemsList.addEventListener('click', toggleTacoed);
+  }())
 </script>
 
 

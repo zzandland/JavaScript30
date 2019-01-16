@@ -6,38 +6,58 @@
 </head>
 <body>
 
-  <p onClick="makeGreen()">×BREAK×DOWN×</p>
+  <p onClick="makeGreen()" class="ouch">×BREAK×DOWN×</p>
 
   <script>
     const dogs = [{ name: 'Snickers', age: 2 }, { name: 'hugo', age: 8 }];
 
     function makeGreen() {
+      console.time('makeGreen');
       const p = document.querySelector('p');
       p.style.color = '#BADA55';
       p.style.fontSize = '50px';
+      console.timeEnd('makeGreen');
     }
 
     // Regular
+    console.log('hello');
 
     // Interpolated
+    console.log('hello I am a %s string!', 'david');
 
     // Styled
+    console.log('%c I am some great text', 'font-size: 50px; background-color: red; text-shadow: 10px 10px 0 blue');
 
     // warning!
+    console.warn('OH NOOO');
 
     // Error :|
+    console.error('Shit!');
 
     // Info
+    console.info('fun fact');
 
     // Testing
+    const p = document.querySelector('p');
+    console.assert(p.classList.contains('ouch'), 'That is wrong!');
 
     // clearing
+    console.clear();
 
     // Viewing DOM Elements
+    console.dir(p);
+    console.clear();
 
     // Grouping together
+    dogs.forEach(dog => {
+      console.groupCollapsed(dog.name);
+        console.log('this is %s', dog.name);
+        console.log('%c %s is %d years old.', 'color: blue; font-weight: 800', dog.name, dog.age); 
+      console.groupEnd(dog.name);
+    });
 
     // counting
+    console.count('Wes');
 
     // timing
 
